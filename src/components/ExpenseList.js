@@ -1,12 +1,22 @@
 import React, { useContext } from 'react';
 import ExpenseItem from './ExpenseItem';
+import { Dropdown } from './Dropdown';
+import { Element } from './Element';
 import { AppContext } from '../context/AppContext';
 
 const ExpenseList = () => {
-    const { expenses } = useContext(AppContext);
-
+    const { expenses,currency,dispatch } = useContext(AppContext);
+    const handleCurrencyChange = (newCurrency) => {
+        dispatch({
+            type: 'CHG_CURRENCY',
+            payload: newCurrency
+        });
+    };
     return (
-        <table className='table'>
+        <div>
+        <Dropdown selectedCurrency={currency} onCurrencyChange={handleCurrencyChange} />    
+       
+         <table className='table'>
               <thead className="thead-light">
             <tr>
               <th scope="col">Department</th>
@@ -21,6 +31,7 @@ const ExpenseList = () => {
             ))}
             </tbody>
         </table>
+        </div>
     );
 };
 
